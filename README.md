@@ -54,4 +54,18 @@ Steps to integrate the Springfox as follows, with the description as what each s
       }
       ```
 
-3. Instruct the packages or class to scan
+3. Instruct spring to scan APIs for specification.
+    * Using component scan base package and class scanning.
+      ```java
+       import org.springframework.context.annotation.ComponentScan;import org.springframework.context.annotation.Configuration;
+       import springfox.documentation.swagger2.annotations.EnableSwagger2;
+      
+       @Configuration
+       @EnableSwagger2
+       @ComponentScan(basePackages = "com.spring.swagger.controller")
+       public class SwaggerConfig {
+      
+      }
+        ```
+   
+    * Using Docket
