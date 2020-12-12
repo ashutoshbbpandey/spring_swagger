@@ -57,7 +57,8 @@ Steps to integrate the Springfox as follows, with the description as what each s
 3. Instruct spring to scan APIs for specification.
     * Using component scan base package and class scanning.
       ```java
-       import org.springframework.context.annotation.ComponentScan;import org.springframework.context.annotation.Configuration;
+       import org.springframework.context.annotation.ComponentScan;
+       import org.springframework.context.annotation.Configuration;
        import springfox.documentation.swagger2.annotations.EnableSwagger2;
       
        @Configuration
@@ -69,3 +70,25 @@ Steps to integrate the Springfox as follows, with the description as what each s
         ```
    
     * Using Docket
+        - Docket is a primary API configuration mechanism for springfox.
+        - Docket API is initialized with documentation type for SWAGGER_2 it has
+          to be initialized with DocumentationType.SWAGGER_2.
+        - select() returns an instance of ApiSelectorBuilder to give fine grained control over the endpoints exposed
+          via swagger.
+        - paths() allows selection of Path's using a predicate. The example here uses an any predicate (default). Out of the box we provide predicates for regex, ant, any, none.
+        
+        Example:
+        ```java
+        import org.springframework.context.annotation.Configuration;
+        import springfox.documentation.swagger2.annotations.EnableSwagger2;
+        
+        @Configuration
+        @EnableSwagger2
+        public class SwaggerConfig {
+            @Bean
+            public Docket postsApi() {
+                return new Docket(DocumentationType.SWAGGER_2)
+                    .select().paths(postPaths()).build();
+             }
+        }
+        ```
